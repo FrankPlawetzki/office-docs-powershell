@@ -24,7 +24,6 @@ Set-MailboxServer [-Identity] <MailboxServerIdParameter>
  [-CalendarRepairLogEnabled <$true | $false>] [-CalendarRepairLogFileAgeLimit <EnhancedTimeSpan>]
  [-CalendarRepairLogPath <LocalLongFullPath>] [-CalendarRepairLogSubjectLoggingEnabled <$true | $false>]
  [-CalendarRepairMissingItemFixDisabled <$true | $false>] [-CalendarRepairSchedule <ScheduleInterval[]>]
- [-CalendarRepairWorkCycle <EnhancedTimeSpan>] [-CalendarRepairWorkCycleCheckpoint <EnhancedTimeSpan>]
  [-Confirm] [-DatabaseCopyAutoActivationPolicy <Unrestricted | IntrasiteOnly | Blocked>]
  [-DomainController <Fqdn>] [-FolderLogForManagedFoldersEnabled <$true | $false>]
  [-ForceGroupMetricsGeneration <$true | $false>] [-GroupMetricsGenerationTime <String>]
@@ -66,54 +65,41 @@ You need to be assigned permissions before you can run this cmdlet. Although thi
 
 ### -------------------------- Example 1 --------------------------
 ```
-Set-MailboxServer -Identity MBX02 -CalendarRepairWorkCycle 7.00:00:00 -CalendarRepairWorkCycleCheckpoint 7.00:00:00
-```
-
-In Exchange 2013, this example throttles the Calendar Repair Assistant to detect and repair calendar inconsistencies for the Mailbox server MBX02 in a 7-day period. During that 7-day period, all mailboxes will be scanned, and at the end of the period, the process will start over.
-
-### -------------------------- Example 2 --------------------------
-```
 Set-MailboxServer -Identity MBX01 -CalendarRepairIntervalEndWindow 40 -CalendarRepairLogDirectorySizeLimit 750MB -CalendarRepairLogFileAgeLimit 15.00:00:00 -CalendarRepairLogPath "D:\Exchange Logs\Calendar Repair Assistant"
 ```
 
 This example changes some of the default settings of the Calendar Repair Assistant on the server named MBX01.
 
-### -------------------------- Example 3 --------------------------
-```
-Set-MailboxServer -Identity MBX02 -CalendarRepairWorkCycle 7.00:00:00 -CalendarRepairWorkCycleCheckpoint 7.00:00:00
-```
 
-In Exchange 2010, this example throttles the Calendar Repair Assistant to detect and repair calendar inconsistencies for the Mailbox server MBX02 in a 7-day period. During that 7-day period, all mailboxes will be scanned, and at the end of the period, the process will start over.
-
-### -------------------------- Example 4 --------------------------
+### -------------------------- Example 2 --------------------------
 ```
 Set-MailboxServer -Identity MBX02 -ManagedFolderWorkCycle 10.00:00:00 -ManagedFolderWorkCycleCheckpoint 10.00:00:00
 ```
 
 In Exchange 2013, this example throttles the Managed Folder Assistant, which applies message retention settings to all mailboxes for the Mailbox server MBX02 in a 10-day period. During that 10-day period, all mailboxes will be scanned, and at the end of the period, the process will start over.
 
-### -------------------------- Example 5 --------------------------
+### -------------------------- Example 3 --------------------------
 ```
 Set-MailboxServer -Identity MBX02 -ManagedFolderWorkCycle 10.00:00:00 -ManagedFolderWorkCycleCheckpoint 10.00:00:00
 ```
 
 In Exchange 2010, this example throttles the Managed Folder Assistant, which applies message retention settings to all mailboxes for the Mailbox server MBX02 in a 10-day period. During that 10-day period, all mailboxes will be scanned, and at the end of the period, the process will start over.
 
-### -------------------------- Example 6 --------------------------
+### -------------------------- Example 4 --------------------------
 ```
 Set-MailboxServer -Identity MBX02 -SharingPolicyWorkCycle 7.00:00:00 -SharingPolicyWorkCycleCheckpoint 7.00:00:00 -SharingSyncWorkCycle 7.00:00:00 -SharingSyncWorkCycleCheckpoint 7.00:00:00
 ```
 
 In Exchange 2013, this example throttles the Sharing Policy and Sharing Sync Assistants to apply sharing policies, sync shared calendars, and free/busy information for the mailboxes on server MBX02 in a 7-day period. During that 7-day period, all mailboxes will be scanned, and at the end of the period, the process will start over.
 
-### -------------------------- Example 7 --------------------------
+### -------------------------- Example 5 --------------------------
 ```
 Set-MailboxServer -Identity MBX02 -SharingPolicyWorkCycle 7.00:00:00 -SharingPolicyWorkCycleCheckpoint 7.00:00:00 -SharingSyncWorkCycle 7.00:00:00 -SharingSyncWorkCycleCheckpoint 7.00:00:00
 ```
 
 In Exchange 2010, this example throttles the Sharing Policy and Sharing Sync Assistants to apply sharing policies, sync shared calendars, and free/busy information for the mailboxes on server MBX02 in a 7-day period. During that 7-day period, all mailboxes will be scanned, and at the end of the period, the process will start over.
 
-### -------------------------- Example 8 --------------------------
+### -------------------------- Example 6 --------------------------
 ```
 Set-MailboxServer -Identity MBX02 -TopNWorkCycle 10.00:00:00 -TopNWorkCycleCheckpoint 10.00:00:00 -UMReportingWorkCycle 10.00:00:00 -UMReportingWorkCycleCheckpoint 10.00:00:00
 ```
@@ -342,45 +328,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -CalendarRepairWorkCycle
-The CalendarRepairWorkCycle parameter specifies the time span in which all mailboxes on the Mailbox server will be scanned by the Calendar Repair Assistant. The default value is 1 day.
-
-Calendars that have inconsistencies will be flagged and repaired according to the interval specified by the CalendarRepairWorkCycleCheckpoint parameter.
-
-To specify a value, enter it as a time span: dd.hh:mm:ss where d = days, h = hours, m = minutes, and s = seconds.
-
-For example, to specify 2 days for this parameter, use 2.00:00:00. The Calendar Repair Assistant will then process all mailboxes on this server every 2 days.
-
-```yaml
-Type: EnhancedTimeSpan
-Parameter Sets: (All)
-Aliases:
-Applicable: Exchange Server 2010, Exchange Server 2013
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -CalendarRepairWorkCycleCheckpoint
-The CalendarRepairWorkCycleCheckpoint parameter specifies the time span at which all mailboxes on the Mailbox server will be identified as needing work completed on them. The default value is 1 day.
-
-To specify a value, enter it as a time span: dd.hh:mm:ss where d = days, h = hours, m = minutes and s = seconds.
-
-For example, to specify 2 days for this parameter, use 2.00:00:00. The Calendar Repair Assistant will then process all mailboxes on this server every 2 days.
-
-```yaml
-Type: EnhancedTimeSpan
-Parameter Sets: (All)
-Aliases:
-Applicable: Exchange Server 2010, Exchange Server 2013
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Confirm
 The Confirm switch specifies whether to show or hide the confirmation prompt. How this switch affects the cmdlet depends on if the cmdlet requires confirmation before proceeding.
